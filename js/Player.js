@@ -54,13 +54,13 @@ class Player {
     })
   }
   getCarsAtEnd(){
-    var carAtEnd = database.ref("carAtEnd");
+    var carAtEnd = database.ref("carsAtEnd");
     carAtEnd.on("value", (data)=>{
       this.rank = data.val();
     })
   }
   static updateCarsAtEnd(count){
-    var carsAtEnd=databse.ref("/")
+    var carsAtEnd=database.ref("/")
     carsAtEnd.update({
       carsAtEnd : count
     })

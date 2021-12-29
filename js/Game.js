@@ -82,6 +82,7 @@ class Game {
       player.getCarsAtEnd();
       this.handlePlayerControls();
       this.showLeaderboard();
+      
       var x = 0;
       var y = 0;
       var index = 0;
@@ -89,7 +90,7 @@ class Game {
       for(var plr in allPlayers){
         //console.log(allPlayers[plr].name);
         index = index+1;
-        
+        this.showFuelBar();
         x=allPlayers[plr].positionX;
         if(x===0){
           if(index===1){
@@ -110,6 +111,8 @@ class Game {
           ellipse(x,y,100,100);
           this.handleFuel(index);
           this.handleCoin(index);
+          
+          
         }
       }
       if(player.positionY > finishLine){
@@ -216,6 +219,17 @@ class Game {
 
   end(){
 
+  }
+  showFuelBar(){
+    image(fuelImage, player.positionX - 120, player.positionY - 200, 5, 5);
+    push();
+    fill("white");
+    rect(player.positionX-100, player.positionY-200,185,20);
+    
+    fill("green");
+    rect(player.positionX-100, player.positionY-200, player.fuel, 20);
+    noStroke();
+    pop();
   }
   
 }
