@@ -4,6 +4,7 @@ class Game {
 
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
+    this.isCarMoving =false;
   }
 
   start() {
@@ -62,16 +63,21 @@ class Game {
     if(keyIsDown(UP_ARROW)){
       player.positionY=player.positionY+10;
       player.updatePlayer();
+      this.isCarMoving = true;
     }
     if(keyIsDown(LEFT_ARROW)&& player.positionX > width/2 - 100){
       console.log("left");
       player.positionX=player.positionX-10;
-      player.updatePlayer();}
+      player.updatePlayer();
+      this.isCarMoving = true;
+    }
 
       if(keyIsDown(RIGHT_ARROW)&& player.positionX < width/2 + 100){
         console.log("right");
         player.positionX=player.positionX+10;
-        player.updatePlayer();}
+        player.updatePlayer();
+        this.isCarMoving= true;
+      }
   }
   play(){
     this.handleElements();
@@ -80,9 +86,12 @@ class Game {
     if(allPlayers !== undefined){
       image(track, 0, -height*5, width, height*6);
       player.getCarsAtEnd();
+
       this.handlePlayerControls();
       this.showLeaderboard();
       this.showFuelBar();
+      this.showLifeBar();
+
       var x = 0;
       var y = 0;
       var index = 0;
@@ -105,7 +114,7 @@ class Game {
         cars[index-1].position.y=y;
         //console.log(cars);
         if(index===player.id){
-          player.positionX = x;
+          player.positionX = x;          
           player.updatePlayer();
           camera.position.x = x;
           camera.position.y = y;
@@ -149,6 +158,15 @@ class Game {
       player.fuel=185;
       collected.remove();
     })
+
+    if(player.fuel > 0 && this.isCarMoving){
+      player.fuel = player.fuel -0.3;
+    }
+
+    if(player.fuel  <= 0){
+      gameState = 0;
+      this.gameOver();
+    }
   }
   handleCoin(index){
     cars[index-1].overlap(coins,(collector, collected)=>{
@@ -222,16 +240,30 @@ class Game {
   end(){
 
   }
-  showFuelBar(){
-    image(fuelImage, player.positionX - 120, player.positionY - 200, 5, 5);
+  showFuelBar(){   
+    image(fuelImage, player.positionX - 130, height - player.positionY - 100, 25, 25);
     push();
     fill("white");
-    rect(player.positionX-100, player.positionY-200,185,20);
-    
+    rect(player.positionX-100, height - player.positionY-100,185,20);    
     fill("green");
-    rect(player.positionX-100, player.positionY-200, player.fuel, 20);
+    rect(player.positionX-100, height - player.positionY-100, player.fuel, 20);
     noStroke();
     pop();
+  }
+
+  showLifeBar(){
+    image(fuelImage, player.positionX - 130, height - player.positionY - 150, 25, 25);
+    push();
+    fill("white");
+    rect(player.positionX-100, height - player.positionY-150,185,20);    
+    fill("red");
+    rect(player.positionX-100, height - player.positionY-150, player.life, 20);
+    noStroke();
+    pop();
+  }
+
+  gameOver(){
+    console.log("game over");
   }
   
 }
