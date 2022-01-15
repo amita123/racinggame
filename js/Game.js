@@ -63,12 +63,12 @@ class Game {
       player.positionY=player.positionY+10;
       player.updatePlayer();
     }
-    if(keyIsDown(LEFT_ARROW)&& player.positionX > width/2 - 300){
+    if(keyIsDown(LEFT_ARROW)&& player.positionX > width/2 - 100){
       console.log("left");
       player.positionX=player.positionX-10;
       player.updatePlayer();}
 
-      if(keyIsDown(RIGHT_ARROW)&& player.positionX < width/2 + 300){
+      if(keyIsDown(RIGHT_ARROW)&& player.positionX < width/2 + 100){
         console.log("right");
         player.positionX=player.positionX+10;
         player.updatePlayer();}
@@ -82,7 +82,7 @@ class Game {
       player.getCarsAtEnd();
       this.handlePlayerControls();
       this.showLeaderboard();
-      
+      this.showFuelBar();
       var x = 0;
       var y = 0;
       var index = 0;
@@ -90,7 +90,7 @@ class Game {
       for(var plr in allPlayers){
         //console.log(allPlayers[plr].name);
         index = index+1;
-        this.showFuelBar();
+        
         x=allPlayers[plr].positionX;
         if(x===0){
           if(index===1){
@@ -105,6 +105,8 @@ class Game {
         cars[index-1].position.y=y;
         //console.log(cars);
         if(index===player.id){
+          player.positionX = x;
+          player.updatePlayer();
           camera.position.x = x;
           camera.position.y = y;
           fill("yellow");
