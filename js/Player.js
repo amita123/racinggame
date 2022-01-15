@@ -7,6 +7,7 @@ class Player {
     this.fuel = 185;
     this.score = 0;
     this.rank = 0;
+    this.life = 185;
   }
   getCount(){
     var playerRef=database.ref("playerCount");
@@ -32,7 +33,8 @@ class Player {
       positionY : this.positionY,
       fuel:this.fuel,
       score:this.score,
-      rank:this.rank
+      rank:this.rank,
+      life:this.life
       
     })
   }
@@ -44,7 +46,8 @@ class Player {
       positionY : this.positionY,
       fuel: this.fuel,
       score: this.score,
-      rank:this.rank
+      rank:this.rank, 
+      life:this.life
     })
   }
   static getAllPlayers(){
